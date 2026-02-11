@@ -1,20 +1,32 @@
 #!/bin/bash
 
-set -eo pipefail
+# set -eo pipefail
 
-# If a wheelhouse cache directory exists, the repository is being used as
-# input to a wheelhouse build, to build Python wheels for required packages.
-# In this case fall through to executing the original 'assemble' script.
+## If a wheelhouse cache directory exists, the repository is being used as
+## input to a wheelhouse build, to build Python wheels for required packages.
+## In this case fall through to executing the original 'assemble' script.
 
-if [ -d /opt/app-root/wheelhouse ]; then
-    exec /opt/app-root/s2i/assemble
-fi
+#if [ -d /opt/app-root/wheelhouse ]; then
+#    exec /opt/app-root/s2i/assemble
+#fi
 
-# Install 'powershift-cli[image]' package to add support for action hooks.
+## Install 'powershift-cli[image]' package to add support for action hooks.
 
-pip install powershift-cli[image]
+#pip install powershift-cli[image]
 
 # Run the build phase with support for action hooks.
 
-# exec powershift image assemble
-exec powershift --help
+#exec powershift image assemble
+
+# ----
+#!/bin/bash
+set -eo pipefail
+
+# If a wheelhouse cache directory exists, the repository is being used
+# as input to a wheelhouse build. Fall through to the original assemble.
+if [ -d /opt/app-root/wheelhouse ]; then
+  exec /opt/app-root/s2i/assemble
+fi
+
+# Normal S2I path — use the builder's default behavior.
+exec /opt/app-root/s2i/assemble
