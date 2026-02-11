@@ -22,11 +22,8 @@
 #!/bin/bash
 set -eo pipefail
 
-# If a wheelhouse cache directory exists, the repository is being used
-# as input to a wheelhouse build. Fall through to the original assemble.
 if [ -d /opt/app-root/wheelhouse ]; then
-  exec /opt/app-root/s2i/assemble
+  exec /usr/libexec/s2i/assemble
 fi
 
-# Normal S2I path — use the builder's default behavior.
-exec /opt/app-root/s2i/assemble
+exec /usr/libexec/s2i/assemble
